@@ -1,0 +1,42 @@
+\ProvidesPackage{turnipwordcount}[2020/12/16]
+
+% ----
+% ARGS
+% ----
+
+% %% Hide TODOs option
+% \newif\if@libertinemath\@libertinemathfalse
+% \DeclareOption{libertinemath}{
+%   \@libertinemathtrue
+% }
+
+
+% Done taking options
+\ProcessOptions*\relax
+
+% ----
+% MAIN
+% ____
+
+
+\newcommand{\detailtexcount}[1]{%
+  \immediate\write18{texcount -merge -sum #1.tex > #1.wcdetail }%
+  \verbatiminput{#1.wcdetail}%
+}
+
+\newcommand{\quickwordcount}[1]{%
+  \immediate\write18{texcount -1 -sum -merge -q #1.tex > #1-words.sum }%
+  \input{#1-words.sum}words%
+}
+
+\newcommand{\quickcharcount}[1]{%
+  \immediate\write18{texcount -1 -sum -merge -char -q #1.tex > #1-chars.sum }%
+  \input{#1-chars.sum} characters (not including spaces)%
+}
+
+\newcommand{\essayinput}[1]{%
+    \textbf{\quickwordcount{#1}}%
+    \firstpar%
+    \vspace{1em}\\
+    \input{#1}%
+}
