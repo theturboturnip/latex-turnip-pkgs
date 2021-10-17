@@ -1,0 +1,36 @@
+\ProvidesPackage{turnipcite}[2020/12/16]
+
+% ----
+% ARGS
+% ----
+
+% %% Hide TODOs option
+% \newif\if@libertinemath\@libertinemathfalse
+% \DeclareOption{libertinemath}{
+%   \@libertinemathtrue
+% }
+
+
+% Done taking options
+\ProcessOptions*\relax
+
+% ----
+% MAIN
+% ____
+
+\RequirePackage{csquotes}
+\RequirePackage[british]{babel}
+\RequirePackage[backend=biber,dateabbrev=false,style=numeric]{biblatex}
+\RequirePackage[notlot,notlof,nottoc]{tocbibind} % For including the bibliography in the TOC
+
+\newcommand{\turnipbib}[1]{%
+\pagebreak
+    \setcounter{secnumdepth}{0} % Remove numbering for bib
+    \begingroup
+    \raggedright
+    \printbibheading[heading=bibnumbered]
+    #1
+    \printbibliography[heading=none]
+    \endgroup%
+    \setcounter{secnumdepth}{3} % Restore numbering in case needed
+}

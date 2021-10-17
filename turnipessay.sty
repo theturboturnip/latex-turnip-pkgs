@@ -1,0 +1,64 @@
+\ProvidesPackage{turnipessay}[2021/10/17]
+
+\RequirePackage{etoolbox}
+
+\RequirePackage{turnipwordcount}
+\RequirePackage{xcolor}
+\RequirePackage[colorlinks,unicode,pdfusetitle]{hyperref}
+
+% ----
+% ARGS
+% ----
+
+
+% Done taking options
+\ProcessOptions*\relax
+
+% ----
+% MAIN
+% ____
+
+% hyperref setup
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\hypersetup{linkcolor=blue!80!black}
+
+\newcommand{\turnipessay}[2]{%
+\begin{titlepage}
+    \raggedright%
+    \null\vfil
+%   \vskip 60\p@
+    \begin{center}%
+        {\LARGE \@title \par}%
+        \vskip 3em%
+        {\large
+         \lineskip .75em%
+          \begin{tabular}[t]{c}%
+            \@author
+          \end{tabular}\par}%
+          \vskip 1.5em%
+        {\large \@date \par}%       % Set date in \large size.
+        \vskip 1.5em%
+        {\large \quickwordcount{#1} \par}%
+    \end{center}\par
+    \vfil\null
+        
+    %
+    \tableofcontents%
+    %
+    \vfill\null
+    \begin{center}
+        \textbf{Word Count Begins on Next Page}
+    \end{center}
+\end{titlepage}
+\pagebreak{}
+\input{#1}
+\vfill\null
+\begin{center}
+    \textbf{Word Count Ends Here}
+\end{center}
+}

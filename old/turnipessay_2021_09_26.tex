@@ -1,0 +1,79 @@
+\ProvidesPackage{turnipessay}[2021/09/26]
+
+\RequirePackage{etoolbox}
+
+% ----
+% ARGS
+% ----
+
+
+% Done taking options
+\ProcessOptions*\relax
+
+% ----
+% MAIN
+% ____
+
+% Get turnipwordcount for word counting
+\RequirePackage{turnipwordcount}
+
+% Get turnipstyle for nice styling
+\RequirePackage{turnipstyle}
+
+% Get the hyperref package and set it up
+\RequirePackage[colorlinks,unicode,pdfusetitle]{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\hypersetup{linkcolor=blue!80!black}
+
+% \AtBeginDocument{
+%   \hypersetup{
+%     pdftitle = {\@title},
+%     pdfauthor = {\@author}
+%   }
+% }
+
+% Use cleveref
+\RequirePackage[capitalize,nameinlink]{cleveref}
+
+\newcommand{\turnipessay}[2]{%
+\begin{titlepage}
+    \raggedright%
+    \null\vfil
+%   \vskip 60\p@
+    \begin{center}%
+        {\LARGE \@title \par}%
+        \vskip 3em%
+        {\large
+         \lineskip .75em%
+          \begin{tabular}[t]{c}%
+            \@author
+          \end{tabular}\par}%
+          \vskip 1.5em%
+        {\large \@date \par}%       % Set date in \large size.
+        \vskip 1.5em%
+        {\large \quickwordcount{#1} \par}%
+    \end{center}\par
+    \vfil\null
+        
+    %
+    \tableofcontents%
+    %
+    \vfil\null
+    \begin{center}
+        \textbf{Word Count Begins on Next Page}
+    \end{center}
+\end{titlepage}
+\pagebreak{}
+\input{#1}
+\vfil\null
+\begin{center}
+    \textbf{Word Count Ends Here}
+\end{center}
+}
+
+\RequirePackage[margin=3.5cm]{geometry}
