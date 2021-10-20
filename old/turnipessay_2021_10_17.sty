@@ -1,4 +1,4 @@
-\ProvidesPackage{turnipessay}[2021/10/20]
+\ProvidesPackage{turnipessay}[2021/10/17]
 
 \RequirePackage{etoolbox}
 
@@ -18,9 +18,6 @@
 % MAIN
 % ____
 
-\def\@subtitle{}
-\newcommand{\subtitle}[1]{\def\@subtitle{#1}}
-
 % hyperref setup
 \hypersetup{
     colorlinks,
@@ -37,8 +34,6 @@
 %   \vskip 60\p@
     \begin{center}%
         {\LARGE \@title \par}%
-        \vskip 1em%
-        {\large \@subtitle \par}%
         \vskip 3em%
         {\large
          \lineskip .75em%
