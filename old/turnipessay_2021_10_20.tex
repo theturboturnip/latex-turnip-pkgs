@@ -1,4 +1,4 @@
-\ProvidesPackage{turnipessay}[2021/11/06]
+\ProvidesPackage{turnipessay}[2021/10/20]
 
 \RequirePackage{etoolbox}
 
@@ -10,13 +10,6 @@
 % ARGS
 % ----
 
-\newif\if@wordcount\@wordcounttrue
-\DeclareOption{wordcount}{
-  \@wordcounttrue
-}
-\DeclareOption{nowordcount}{
-  \@wordcountfalse
-}
 
 % Done taking options
 \ProcessOptions*\relax
@@ -55,9 +48,7 @@
           \vskip 1.5em%
         {\large \@date \par}%       % Set date in \large size.
         \vskip 1.5em%
-        \if@wordcount
         {\large \quickwordcount{#1} \par}%
-        \fi
     \end{center}\par
     \vfil\null
         
@@ -65,20 +56,14 @@
     \tableofcontents%
     %
     \vfill\null
-    \if@wordcount
     \begin{center}
         \textbf{Word Count Begins on Next Page}
     \end{center}
-    \fi
 \end{titlepage}
-\if@wordcount
 \pagebreak{}
-\fi
 \input{#1}
-\if@wordcount
 \vfill\null
 \begin{center}
     \textbf{Word Count Ends Here}
 \end{center}
-\fi
 }
