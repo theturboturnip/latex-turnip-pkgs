@@ -15,6 +15,7 @@ It has four commands:
 1. `\todomark{Finish this sentence}` becomes `[TODO1 Finish this sentence]`
 2. `\todocite{https://ieeexplore.ieee.org/document/8918510}` becomes `[TC1]`.
      - By default, it adds a footnote with the thing you're citing. This can be disabled with [nofootnotes] option.
+     - It also supports an optional argument, e.g. `\todocite[Page 1]{Bee Movie Script}` to `[TC1, Page 1]`
 3. `See \todoref{figure showing performance results}` becomes `See Section ??1`
 4. `\todopending{Maybe mention XYZ?}` becomes `[TODO?1 Maybe mention XYZ]`
      - `\todopending` and `\todomark` are almost the same, but options like `[error]` ignore todopending.

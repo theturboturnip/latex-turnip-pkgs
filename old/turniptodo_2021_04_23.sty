@@ -1,16 +1,13 @@
-\ProvidesPackage{turniptodo}[2022/01/12]
+\ProvidesPackage{turniptodo}[2021/04/23]
 
 % For macro help
 \RequirePackage{etoolbox}
-\RequirePackage{xpatch}
 % For TODO highlighting
 \RequirePackage{xcolor}
 % For writing out to files
 \RequirePackage{newfile}
 % For finding the current file
 \RequirePackage{currfile}
-% For nice conditionals on todocite
-\RequirePackage{ifthen}
 
 % ----
 % ARGS
@@ -91,14 +88,12 @@
         TODO\arabic{todomarki} #1%
     ]}%
 }
-\newcommand{\todocite}[2][]{%
+\newcommand{\todocite}[1]{%
     \refstepcounter{todocitei}%
     \todofmt{[%
         TC\arabic{todocitei}%
-        \ifthenelse { \equal{#1}{} }%
-            {}{, #1}%
         \if@footnotes%
-            \footnote{\todofmt{#2}}%
+            \footnote{\todofmt{#1}}%
         \fi%
     ]}%
 }
@@ -126,12 +121,8 @@
     }{}{}
     
     \@maketodostream{todocite}{TODO Citations}
-    \xapptocmd{\todocite}{%
-        % \ifthenelse { \equal{#1}{} }%
-        %     {}{, #1}%
-        \ifthenelse { \equal{{#1}}{} }%
-            {\addtostream{@todocite}{\arabic{todocitei} - \currfilepath - \unexpanded{#2}}}%
-            {\addtostream{@todocite}{\arabic{todocitei} - \currfilepath - \unexpanded{#2}, \unexpanded{#1}}}%
+    \apptocmd{\todocite}{%
+        \addtostream{@todocite}{\arabic{todocitei} - \currfilepath - \unexpanded{#1}}%
     }{}{}
     
     \@maketodostream{todoref}{TODO Refs}
