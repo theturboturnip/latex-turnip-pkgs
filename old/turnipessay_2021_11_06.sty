@@ -1,9 +1,9 @@
-\ProvidesPackage{turnipessay}[2022/01/12]
+\ProvidesPackage{turnipessay}[2021/11/06]
 
 \RequirePackage{etoolbox}
 
 \RequirePackage{turnipwordcount}
-\RequirePackage[usenames,dvipsnames]{xcolor} 
+\RequirePackage{xcolor}
 \RequirePackage[colorlinks,unicode,pdfusetitle]{hyperref}
 
 % ----
@@ -31,10 +31,11 @@
 % hyperref setup
 \hypersetup{
     colorlinks,
-    linkcolor={Periwinkle!50!blue},
-    citecolor={MidnightBlue},
-    urlcolor={MidnightBlue}
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
 }
+\hypersetup{linkcolor=blue!80!black}
 
 \newcommand{\turnipessay}[2]{%
 \begin{titlepage}
