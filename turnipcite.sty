@@ -1,10 +1,10 @@
-\ProvidesPackage{turnipcite}[2021/02/01]
+\ProvidesPackage{turnipcite}[2022/01/12]
 
 % ----
 % ARGS
 % ----
 
-%% Hide TODOs option
+%% Include page break before the bibliography? Default = true
 \newif\if@withbreak\@withbreaktrue
 \DeclareOption{withbreak}{
   \@withbreaktrue
@@ -13,6 +13,14 @@
   \@withbreakfalse
 }
 
+%% Sanitize bibliography? Includes removing redundant eventtitle, url
+\newif\if@withsanitize\@withsanitizetrue
+\DeclareOption{sanitize}{
+  \@withsanitizetrue
+}
+\DeclareOption{nosanitize}{
+  \@withsanitizefalse
+}
 
 % Done taking options
 \ProcessOptions*\relax
@@ -23,8 +31,54 @@
 
 \RequirePackage{csquotes}
 \RequirePackage[british]{babel}
-\RequirePackage[backend=biber,dateabbrev=false,style=numeric]{biblatex}
+\RequirePackage[backend=biber,dateabbrev=false,style=numeric,sorting=citeorder]{biblatex}
 \RequirePackage[notlot,notlof,nottoc]{tocbibind} % For including the bibliography in the TOC
+
+\if@withsanitize
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      % If DOI present...
+      \step[fieldsource=doi,final]
+      % remove URL
+      \step[fieldset=url,null]
+      \step[fieldset=urldate,null]
+    }
+    \map{
+        % Zotero likes to duplicate the conference name in the booktitle and eventtitle.
+        % The booktitle has more info usually, so remove the eventtitle if both are present.
+        % Because they aren't always duplicates, e.g. in manual entries, in some cases they may resolve ambiguity
+        % => only remove eventtitle if a DOI is present, i.e. there is no ambiguity.
+        % if DOI and booktitle
+        \step[fieldsource=doi,final]
+        \step[fieldsource=booktitle,final]
+        % remove eventtitle
+        \step[fieldset=eventtitle,null]
+    }
+  }
+}
+\fi
+
+
+\DeclareSortingTemplate{citeorder}{
+  \sort{
+    \field{presort}
+  }
+  \sort[final]{
+    \field{sortkey}
+  }
+  \sort{\citeorder}
+}
+% \DeclareSortingTemplate{citeauthororder}{
+%   \sort{
+%     \field{presort}
+%   }
+%   \sort[final]{
+%     \field{sortkey}
+%   }
+% %   \sort{\citeorder}
+%   \sort{\field{author}}
+% }
 
 \newcommand{\turnipbib}[1]{%
 \if@withbreak

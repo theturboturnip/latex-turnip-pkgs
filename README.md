@@ -33,3 +33,19 @@ Options can be passed to the package when you import it e.g. `\usepackage[hideto
 - `[release]` is the equivalent of `[hidetodo,error]`. Errors will be emitted for every TODO, but they will all be hidden. This is useful if you want to send a "finished"-looking version to someone.
 - `[disablewrite]` stops it from generating `todoblah.txt` files.
 - `[nofootnotes]` disables footnotes for `\todocite`
+
+
+## turnipcite
+This sets my custom biblography settings, including:
+- Numeric cite marks, e.g. `[3]`
+- Cite-ordered numbers, e.g. `\cite{a}, \cite{b}` -> `[1],[2]` instead of sorting by e.g. author
+- Sanitized references
+    - If a DOI is present, the URL will be removed
+    - If a DOI and `booktitle` are present, the `eventtitle` will be removed (Zotero likes to fill it with redundant information from `booktitle`)
+
+`\turnipbib{}` will create a normal references page.
+A message can be added in the argument, e.g. `\turnipbib{All URLs accessed on 01-01-01 unless otherwise states}` which will be placed between the references header and the rest of the list.
+
+### Options
+- `withbreak`, `nobreak` enables/disables a Page Break included by default inside `\turnipbib`
+- `sanitize`, `nosanitize` enables/disables reference sanitization as shown above.
