@@ -1,4 +1,4 @@
-\ProvidesPackage{turnipcite}[2022/02/05]
+\ProvidesPackage{turnipcite}[2022/01/12]
 
 % ----
 % ARGS
@@ -22,12 +22,6 @@
   \@withsanitizefalse
 }
 
-%% Beamer mode
-\newif\if@inbeamer\@inbeamerfalse
-\DeclareOption{beamer}{
-  \@inbeamertrue
-}
-
 % Done taking options
 \ProcessOptions*\relax
 
@@ -38,11 +32,7 @@
 \RequirePackage[autostyle=false, style=english]{csquotes}
 \RequirePackage[british]{babel}
 \RequirePackage[backend=biber,dateabbrev=false,style=numeric,sorting=citeorder]{biblatex}
-\if@inbeamer
-\else
-% Only use tocbibind when NOT in beamer
 \RequirePackage[notlot,notlof,nottoc]{tocbibind} % For including the bibliography in the TOC
-\fi
 
 \if@withsanitize
 \DeclareSourcemap{
@@ -103,14 +93,3 @@
     \endgroup%
     \setcounter{secnumdepth}{3} % Restore numbering in case needed
 }
-
-\if@inbeamer
-\newcommand{\turnipbibframe}{%
-\begin{frame}[allowframebreaks]{References}
-    \begingroup
-    \raggedright
-    \printbibliography
-    \endgroup%
-\end{frame}
-}
-\fi
