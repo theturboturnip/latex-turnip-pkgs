@@ -1,4 +1,9 @@
-\ProvidesPackage{turnipwordcount}[2021/10/17]
+\ProvidesPackage{turnipwordcount}[2023/03/14]
+
+\RequirePackage{iftex}
+\ifLuaTeX
+\RequirePackage{luacode}
+\fi
 
 % ----
 % ARGS
@@ -11,24 +16,32 @@
 % MAIN
 % ____
 
-\newcommand{\detailtexcount}[1]{%
-  \immediate\write18{texcount -merge -sum #1.tex > detail.wcdetail }%
-  \verbatiminput{#1.wcdetail}%
-}
 
+\ifLuaTeX
+% ⟨material for LuaTEX⟩
+\begin{luacode*}
+wordcount_cmd = "texcount -1 -sum -merge -q "
+
+function wordcount_file(path)
+    local pip=io.popen(wordcount_cmd .. path .. ".tex")
+    wordcount=pip:read()
+    pip:close()
+    return format_thousand(wordcount)
+end
+    
+-- From http://www.computercraft.info/forums2/index.php?/topic/8065-lua-thousand-separator/
+function format_thousand(v)
+    local s = string.format("%d", math.floor(v))
+    local pos = string.len(s) % 3
+    if pos == 0 then pos = 3 end
+    return string.sub(s, 1, pos) .. string.gsub(string.sub(s, pos+1), "(...)", ",%1")
+end
+\end{luacode*}
+\newcommand{\quickwordcount}[1]{\luadirect{tex.sprint(wordcount_file("#1"))} words}
+\else
+% ⟨material not for LuaTEX⟩
 \newcommand{\quickwordcount}[1]{%
   \immediate\write18{texcount -1 -sum -merge -q #1.tex > words.sum }%
   \input{words.sum}words%
 }
-
-\newcommand{\quickcharcount}[1]{%
-  \immediate\write18{texcount -1 -sum -merge -char -q #1.tex > chars.sum }%
-  \input{chars.sum} characters (not including spaces)%
-}
-
-\newcommand{\essayinput}[1]{%
-    \textbf{\quickwordcount{#1}}%
-    \firstpar%
-    \vspace{1em}\\
-    \input{#1}%
-}
+\fi

@@ -1,7 +1,7 @@
 # latex-turnip-pkgs
 Custom LaTeX packages for personal use.
 
-All tested with Overleaf TeXLive 2020+
+All tested with TeXLive LuaLaTeX 2022.
 
 ## turniptodo
 This is the most polished one :)
@@ -49,3 +49,12 @@ A message can be added in the argument, e.g. `\turnipbib{All URLs accessed on 01
 ### Options
 - `withbreak`, `nobreak` enables/disables a Page Break included by default inside `\turnipbib`
 - `sanitize`, `nosanitize` enables/disables reference sanitization as shown above.
+
+## turnipwordcount
+LaTeX- and LuaLaTeX-compatible macros for invoking `texcount`.
+
+Equivalent to calling `texcount -1 -sum -merge -q {file}`.
+
+`\quickwordcount{file}` returns the wordcount for `file.tex` in the form "X words".
+
+When not using LuaLaTeX, creates a file `words.sum` in the top-level directory.
